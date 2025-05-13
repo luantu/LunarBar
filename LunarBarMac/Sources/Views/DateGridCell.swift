@@ -286,7 +286,7 @@ private extension DateGridCell {
 
   func setUp() {
     view.addSubview(containerView)
-    containerView.addAction { [weak self] in
+    containerView.addDoubleClickAction { [weak self] in
       self?.revealDateInCalendar()
     }
 
@@ -359,9 +359,9 @@ private extension DateGridCell {
     }
 
     // Clear states and open the Calendar app
-    view.window?.orderOut(nil)
-    dismissDetails()
-    CalendarManager.default.revealDateInCalendar(cellDate)
+    // view.window?.orderOut(nil)
+    // dismissDetails()
+    // CalendarManager.default.revealDateInCalendar(cellDate) 取消单击打开系统日历功能
   }
 
   func onMouseHover(_ isHovered: Bool) {
