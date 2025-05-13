@@ -8,7 +8,7 @@
 
 # 魔改内容
 1. 状态栏原日期图标，改为显示完成 日期+星期
-   ![image](https://github.com/user-attachments/assets/d50ee92f-43f4-406a-9cd4-2a63ff2effb9)
+<img src="./Screenshots/04.png" width="320" alt="截图 04">
 2. 日历单击不再打开系统日历，仅作为日历使用
 
 <img src="./Screenshots/01.png" width="320" alt="截图 01"> <img src="./Screenshots/02.png" width="320" alt="截图 02">
