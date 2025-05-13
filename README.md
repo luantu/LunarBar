@@ -6,12 +6,12 @@
 
 完全免费且开源的 Mac 状态栏极简日历，支持农历、公共假日、系统日历及提醒等功能。
 
+<img src="./Screenshots/01.png" width="320" alt="截图 01"> <img src="./Screenshots/02.png" width="320" alt="截图 02">
+
 # 魔改内容
 1. 状态栏原日期图标，改为显示完成 日期+星期
-<img src="./Screenshots/04.png" width="320" alt="截图 04">
+   <img src="./Screenshots/04.png" width="320" alt="截图 04">
 2. 日历单击不再打开系统日历，仅作为日历使用
-
-<img src="./Screenshots/01.png" width="320" alt="截图 01"> <img src="./Screenshots/02.png" width="320" alt="截图 02">
 
 > [!TIP]
 > 在 [libremac.github.io](https://libremac.github.io/) 探索我们的其他免费开源应用。
