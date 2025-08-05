@@ -33,9 +33,8 @@ final class HeaderView: NSView {
   }()
 
   private lazy var nextButton: ImageButton = {
-    let button = ImageButton(
+    let button = createButton(
       symbolName: Icons.chevronForward,
-      tintColor: Colors.primaryLabel,
       accessibilityLabel: Localized.UI.buttonTitleNextMonth
     )
 
@@ -52,9 +51,8 @@ final class HeaderView: NSView {
   }()
 
   private lazy var actionsButton: ImageButton = {
-    let button = ImageButton(
+    let button = createButton(
       symbolName: Icons.circle,
-      tintColor: Colors.primaryLabel,
       accessibilityLabel: Localized.UI.buttonTitleShowActions
     )
 
@@ -70,9 +68,8 @@ final class HeaderView: NSView {
   }()
 
   private lazy var previousButton: ImageButton = {
-    let button = ImageButton(
+    let button = createButton(
       symbolName: Icons.chevronBackward,
-      tintColor: Colors.primaryLabel,
       accessibilityLabel: Localized.UI.buttonTitlePreviousMonth
     )
 
@@ -184,7 +181,9 @@ extension HeaderView {
     }()
 
     button.setAlphaValue(0.6) {
-      button.setAlphaValue(1)
+      Task { @MainActor in
+        button.setAlphaValue(1)
+      }
     }
   }
 }
@@ -197,5 +196,15 @@ private extension HeaderView {
     static let datePadding: Double = 9
     static let buttonPadding: Double = 6
     static let dateFormatter: DateFormatter = .localizedMonth
+  }
+
+  func createButton(symbolName: String, accessibilityLabel: String) -> ImageButton {
+    ImageButton(
+      symbolName: symbolName,
+      cornerRadius: AppDesign.cellCornerRadius,
+      highlightColorProvider: { .highlightedBackground },
+      tintColor: Colors.primaryLabel,
+      accessibilityLabel: accessibilityLabel
+    )
   }
 }

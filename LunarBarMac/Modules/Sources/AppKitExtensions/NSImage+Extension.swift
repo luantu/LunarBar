@@ -29,6 +29,31 @@ public extension NSImage {
     return image
   }
 
+  static func with(text: String, font: NSFont) -> NSImage {
+    let attributes: [NSAttributedString.Key: Any] = [.font: font]
+    let string = NSAttributedString(string: text, attributes: attributes)
+    let size = string.size()
+
+    guard let bitmap = NSBitmapImageRep(size: size) else {
+      // Fallback, not rendering scale aware
+      return NSImage(size: size, flipped: false) { _ in
+        string.draw(at: .zero)
+        return true
+      }
+    }
+
+    let context = NSGraphicsContext(bitmapImageRep: bitmap)
+    NSGraphicsContext.saveGraphicsState()
+    NSGraphicsContext.current = context
+
+    string.draw(at: .zero)
+    NSGraphicsContext.restoreGraphicsState()
+
+    let image = NSImage(size: size)
+    image.addRepresentation(bitmap)
+    return image
+  }
+
   @MainActor
   static func with(cellColor: NSColor, borderColor: NSColor? = nil, size: CGSize, cornerRadius: Double) -> NSImage? {
     let view = NSView(frame: CGRect(origin: .zero, size: size))

@@ -6,6 +6,7 @@
 //
 
 import AppKit
+import AppKitControls
 import AppKitExtensions
 import LunarBarKit
 import ServiceManagement
@@ -41,6 +42,10 @@ extension AppMainVC {
 // MARK: - Private
 
 private extension AppMainVC {
+  enum Constants {
+    @MainActor static let menuIconSize: Double = AppDesign.menuIconSize
+  }
+
   var menuItemGotoToday: NSMenuItem {
     let item = NSMenuItem(title: Localized.UI.menuTitleGotoToday, action: nil, keyEquivalent: " ")
     item.keyEquivalentModifierMask = []
@@ -103,7 +108,18 @@ private extension AppMainVC {
 
       NSLayoutConstraint.activate([
         picker.centerXAnchor.constraint(equalTo: wrapper.centerXAnchor),
-        picker.centerYAnchor.constraint(equalTo: wrapper.centerYAnchor),
+        picker.centerYAnchor.constraint(equalTo: wrapper.centerYAnchor, constant: {
+          guard AppDesign.modernStyle else {
+            return 0
+          }
+
+        #if BUILD_WITH_SDK_26_OR_LATER
+          return 0
+        #else
+          // [macOS 26] Interim workaround for layout misalignment
+          return 2.5
+        #endif
+        }()),
       ])
 
       // Inside a submenu to avoid keyboard navigation conflicts
@@ -128,28 +144,55 @@ private extension AppMainVC {
   var menuItemAppearance: NSMenuItem {
     let menu = NSMenu()
 
+  #if BUILD_WITH_SDK_26_OR_LATER
+    if #available(macOS 26.0, *) {
+      menu.addItem({
+        let item = NSMenuItem(title: Localized.UI.menuTitleClassicInterface)
+        item.image = .with(symbolName: Icons.mustacheFill, pointSize: Constants.menuIconSize)
+        item.setOn(AppPreferences.General.classicInterface)
+
+        item.addAction {
+          AppPreferences.General.classicInterface.toggle()
+        }
+
+        return item
+      }())
+
+      menu.addSeparator()
+    }
+  #endif
+
     // Icon styles
-    menu.addItem(withTitle: Localized.UI.menuTitleMenuBarIcon).isEnabled = false
     menu.addItem({
-      let item = NSMenuItem(title: Localized.UI.menuTitleCurrentDate)
-      item.setOn(AppPreferences.General.menuBarIcon == .date)
+      let item = NSMenuItem(title: Localized.UI.menuTitleMenuBarIcon)
+      item.isEnabled = false
 
-      if let image = AppIconFactory.createDateIcon() {
-        item.image = image.resized(with: CGSize(width: 16.8, height: 12)) // 1.4:1
-      } else {
-        Logger.assertFail("Failed to create the icon")
-      }
-
-      item.addAction {
-        AppPreferences.General.menuBarIcon = .date
+      // [macOS 26] Change this to 26.0
+      if #available(macOS 16.0, *) {
+        // To improve the text alignment
+        item.image = .with(symbolName: Icons.menubarRectangle, pointSize: Constants.menuIconSize)
       }
 
       return item
     }())
 
+    menu.addItem(createDateIconItem(
+      style: .filled,
+      title: Localized.UI.menuTitleFilledDate,
+      isOn: AppPreferences.General.menuBarIcon == .filledDate,
+      action: AppPreferences.General.menuBarIcon = .filledDate,
+    ))
+
+    menu.addItem(createDateIconItem(
+      style: .outlined,
+      title: Localized.UI.menuTitleOutlinedDate,
+      isOn: AppPreferences.General.menuBarIcon == .outlinedDate,
+      action: AppPreferences.General.menuBarIcon = .outlinedDate,
+    ))
+
     menu.addItem({
       let item = NSMenuItem(title: Localized.UI.menuTitleCalendarIcon)
-      item.image = AppIconFactory.createCalendarIcon(pointSize: 14)
+      item.image = AppIconFactory.createCalendarIcon(pointSize: Constants.menuIconSize)
       item.setOn(AppPreferences.General.menuBarIcon == .calendar)
 
       item.addAction {
@@ -158,6 +201,58 @@ private extension AppMainVC {
 
       return item
     }())
+
+    menu.addItem(createCustomIconItem(
+      item: {
+        let item = NSMenuItem(title: Localized.UI.menuTitleSystemSymbol)
+        item.image = .with(symbolName: Icons.gear, pointSize: Constants.menuIconSize)
+        item.setOn(AppPreferences.General.menuBarIcon == .systemSymbol)
+        return item
+      }(),
+      alert: {
+        let alert = NSAlert()
+        alert.messageText = Localized.UI.alertMessageSetSymbolName
+        alert.addButton(withTitle: Localized.UI.alertButtonTitleApplyChanges)
+        alert.addButton(withTitle: Localized.General.cancel)
+        return alert
+      }(),
+      explanation: Localized.UI.alertExplanationSetSymbolName,
+      initialValue: AppPreferences.General.systemSymbolName,
+    ) { symbolName in
+      guard NSImage(systemSymbolName: symbolName, accessibilityDescription: nil) != nil else {
+        return false
+      }
+
+      AppPreferences.General.systemSymbolName = symbolName
+      AppPreferences.General.menuBarIcon = .systemSymbol
+      return true
+    })
+
+    menu.addItem(createCustomIconItem(
+      item: {
+        let item = NSMenuItem(title: Localized.UI.menuTitleCustomFormat)
+        item.image = .with(symbolName: Icons.wandAndSparkles, pointSize: Constants.menuIconSize)
+        item.setOn(AppPreferences.General.menuBarIcon == .custom)
+        return item
+      }(),
+      alert: {
+        let alert = NSAlert()
+        alert.messageText = Localized.UI.alertMessageSetDateFormat
+        alert.addButton(withTitle: Localized.UI.alertButtonTitleApplyChanges)
+        alert.addButton(withTitle: Localized.General.cancel)
+        return alert
+      }(),
+      explanation: Localized.UI.alertExplanationSetDateFormat,
+      initialValue: AppPreferences.General.customDateFormat,
+    ) { dateFormat in
+      guard !dateFormat.isEmpty else {
+        return false
+      }
+
+      AppPreferences.General.customDateFormat = dateFormat
+      AppPreferences.General.menuBarIcon = .custom
+      return true
+    })
 
     menu.addSeparator()
 
@@ -207,7 +302,7 @@ private extension AppMainVC {
 
     menu.addItem(withTitle: Localized.UI.menuTitleReduceTransparency) { [weak self] in
       AppPreferences.Accessibility.reduceTransparency.toggle()
-      self?.popover?.material = AppPreferences.Accessibility.popoverMaterial
+      self?.popover?.applyMaterial(AppPreferences.Accessibility.popoverMaterial)
     }
     .setOn(AppPreferences.Accessibility.reduceTransparency)
 
@@ -396,6 +491,80 @@ private extension AppMainVC {
       NSApp.terminate(nil)
     }
 
+    return item
+  }
+
+  func createDateIconItem(
+    style: DateIconStyle,
+    title: String,
+    isOn: Bool,
+    action: @autoclosure @escaping () -> Void
+  ) -> NSMenuItem {
+    let item = NSMenuItem(title: title)
+    item.setOn(isOn)
+    item.addAction(action)
+
+    if let image = AppIconFactory.createDateIcon(style: style) {
+      item.image = image.resized(with: CGSize(width: 16.8, height: 12)) // 1.4:1
+    } else {
+      Logger.assertFail("Failed to create the icon")
+    }
+
+    return item
+  }
+
+  func createCustomIconItem(
+    item: NSMenuItem,
+    alert: NSAlert,
+    explanation: String,
+    initialValue: String?,
+    commitChange: @escaping (String) -> Bool
+  ) -> NSMenuItem {
+    let inputField = EditableTextField(frame: CGRect(x: 0, y: 0, width: 256, height: 22))
+    inputField.cell?.usesSingleLineMode = true
+    inputField.cell?.lineBreakMode = .byTruncatingTail
+    inputField.stringValue = initialValue ?? ""
+
+    let textView = NSTextView.markdownView(
+      with: explanation,
+      contentWidth: inputField.frame.width
+    )
+
+    textView.frame = CGRect(
+      origin: CGPoint(x: 0, y: inputField.frame.height + 15), // Spacing between two fields
+      size: textView.frame.size
+    )
+
+    let wrapper = NSView(frame: {
+      var rect = textView.frame
+      rect.size.height += textView.frame.minY // Text view height and the spacing
+      return rect
+    }())
+
+    wrapper.addSubview(textView)
+    wrapper.addSubview(inputField)
+    alert.accessoryView = wrapper
+    alert.layout()
+
+    func showAlert() {
+      DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+        inputField.window?.makeFirstResponder(inputField)
+      }
+
+      guard alert.runModal() == .alertFirstButtonReturn else {
+        return
+      }
+
+      guard !commitChange(inputField.stringValue) else {
+        return
+      }
+
+      // Failed to commit the change
+      NSSound.beep()
+      showAlert()
+    }
+
+    item.addAction(showAlert)
     return item
   }
 

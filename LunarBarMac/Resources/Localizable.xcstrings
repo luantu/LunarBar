@@ -112,40 +112,6 @@
         }
       }
     },
-    "[Holiday] " : {
-      "comment" : "Label for holidays",
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "【休假】"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "【休假】"
-          }
-        }
-      }
-    },
-    "[Workday] " : {
-      "comment" : "Label for workdays",
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "【上班】"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "【上班】"
-          }
-        }
-      }
-    },
     "About LunarBar" : {
       "comment" : "[Menu] Open the standard about panel",
       "localizations" : {
@@ -197,6 +163,23 @@
         }
       }
     },
+    "Apply Changes" : {
+      "comment" : "[Alert] Apply the custom date format",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "确认更改"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "確認變更"
+          }
+        }
+      }
+    },
     "Bailu" : {
       "comment" : "The 15th solar term, always in Chinese",
       "localizations" : {
@@ -232,7 +215,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "日曆圖像"
+            "value" : "日曆圖示"
           }
         }
       }
@@ -250,6 +233,23 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "日曆"
+          }
+        }
+      }
+    },
+    "Cancel" : {
+      "comment" : "Title for the \"Cancel\" button",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "取消"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "取消"
           }
         }
       }
@@ -334,6 +334,23 @@
         }
       }
     },
+    "Classic Interface" : {
+      "comment" : "[Menu] Whether to use classic interface in macOS Tahoe",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "经典界面"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "經典介面"
+          }
+        }
+      }
+    },
     "Click to reveal the date in Calendar" : {
       "comment" : "[AX] Tell the user to click the grid to reveal the selected date in the Calendar app",
       "localizations" : {
@@ -402,19 +419,19 @@
         }
       }
     },
-    "Current Date" : {
-      "comment" : "[Menu] Use the current date as the menu bar icon",
+    "Custom Format" : {
+      "comment" : "[Menu] Use a formatted date as the menu bar icon",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "当前日期"
+            "value" : "自定义格式"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "當前日期"
+            "value" : "自訂格式"
           }
         }
       }
@@ -431,7 +448,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "自定義教程"
+            "value" : "自訂教程"
           }
         }
       }
@@ -1417,6 +1434,23 @@
         }
       }
     },
+    "Filled Date" : {
+      "comment" : "[Menu] Use the current date as the menu bar icon, filled style",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "实心日期"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "實心日期"
+          }
+        }
+      }
+    },
     "Ghost Festival" : {
       "comment" : "Chinese traditional festival",
       "localizations" : {
@@ -1520,19 +1554,19 @@
         }
       }
     },
-    "Icon" : {
-      "comment" : "[Menu] Section title for icons",
+    "Holiday" : {
+      "comment" : "Label for holidays",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "图标"
+            "value" : "休假"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "圖像"
+            "value" : "休假"
           }
         }
       }
@@ -1848,6 +1882,23 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "芒種"
+          }
+        }
+      }
+    },
+    "Menu Bar Icon" : {
+      "comment" : "[Menu] Section title for icons",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "菜单栏图标"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "選單列圖示"
           }
         }
       }
@@ -2208,6 +2259,23 @@
         }
       }
     },
+    "OK" : {
+      "comment" : "Title for the \"OK\" button",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "好的"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "好的"
+          }
+        }
+      }
+    },
     "Open Directory" : {
       "comment" : "[Menu] Open the directory of user-defined holidays",
       "localizations" : {
@@ -2221,6 +2289,23 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "開啟目錄"
+          }
+        }
+      }
+    },
+    "Outlined Date" : {
+      "comment" : "[Menu] Use the current date as the menu bar icon, outlined style",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "描边日期"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "描邊日期"
           }
         }
       }
@@ -2255,6 +2340,40 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "請檢查您的網路連線，或從版本記錄中獲取最新版本。"
+          }
+        }
+      }
+    },
+    "Please enter a [SF Symbol](https://developer.apple.com/sf-symbols/) name here. Refer to the [wiki](https://github.com/LunarBar-app/LunarBar/wiki) for more instructions and examples." : {
+      "comment" : "[Alert] Explanation for system symbol name",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "请输入一个 [SF Symbol](https://developer.apple.com/sf-symbols/) 名称，参考[文档](https://github.com/LunarBar-app/LunarBar/wiki)以获取更多说明和示例。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "請輸入一個 [SF Symbol](https://developer.apple.com/sf-symbols/) 名稱，參考[文件](https://github.com/LunarBar-app/LunarBar/wiki)以獲取更多說明和示例。"
+          }
+        }
+      }
+    },
+    "Please enter standard [date format patterns](https://unicode.org/reports/tr35/tr35-dates.html#Date_Format_Patterns) here. Refer to the [wiki](https://github.com/LunarBar-app/LunarBar/wiki) for more instructions and examples." : {
+      "comment" : "[Alert] Explanation for custom date format",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "请输入标准的[日期格式模式](https://unicode.org/reports/tr35/tr35-dates.html#Date_Format_Patterns)，参考[文档](https://github.com/LunarBar-app/LunarBar/wiki)以获取更多说明和示例。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "請輸入標準的[日期格式模式](https://unicode.org/reports/tr35/tr35-dates.html#Date_Format_Patterns)，參考[文件](https://github.com/LunarBar-app/LunarBar/wiki)以獲取更多說明和示例。"
           }
         }
       }
@@ -2430,6 +2549,23 @@
         }
       }
     },
+    "Relaunch LunarBar to apply the change." : {
+      "comment" : "[Alert] Message about relaunch after changing the interface",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "重启 LunarBar 以应用更改。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "重啟 LunarBar 以套用變更。"
+          }
+        }
+      }
+    },
     "Reload Customizations" : {
       "comment" : "[Menu] Reload customized public holidays",
       "localizations" : {
@@ -2442,7 +2578,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "重載自定義假日"
+            "value" : "重載自訂假日"
           }
         }
       }
@@ -2494,6 +2630,40 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "選擇全部"
+          }
+        }
+      }
+    },
+    "Set Date Format" : {
+      "comment" : "[Alert] Configure the custom date format",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "设置日期格式"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "設定日期格式"
+          }
+        }
+      }
+    },
+    "Set Symbol Name" : {
+      "comment" : "[Alert] Configure the system symbol name",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "设置符号名称"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "設定符號名稱"
           }
         }
       }
@@ -2612,6 +2782,23 @@
         }
       }
     },
+    "System Symbol" : {
+      "comment" : "[Menu] Use a system symbol as the menu bar icon",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "系统符号"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "系統符號"
+          }
+        }
+      }
+    },
     "Today" : {
       "comment" : "[Menu] Move to today",
       "localizations" : {
@@ -2665,6 +2852,23 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "寒衣節"
+          }
+        }
+      }
+    },
+    "Workday" : {
+      "comment" : "Label for workdays",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "上班"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "上班"
           }
         }
       }

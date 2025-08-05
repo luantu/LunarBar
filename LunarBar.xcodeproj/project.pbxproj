@@ -26,12 +26,15 @@
 		874E99312B33D8C1002FC90A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 874E99302B33D8C1002FC90A /* Assets.xcassets */; };
 		875A81282B39558000C031C3 /* AppVersion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 875A81262B39558000C031C3 /* AppVersion.swift */; };
 		875A81292B39558000C031C3 /* AppUpdater.swift in Sources */ = {isa = PBXBuildFile; fileRef = 875A81272B39558000C031C3 /* AppUpdater.swift */; };
+		877353D92DFBC1BA00F502AB /* AppDesign.swift in Sources */ = {isa = PBXBuildFile; fileRef = 877353D82DFBC1BA00F502AB /* AppDesign.swift */; };
 		8777B95A2B3426F7007915B2 /* AppKitControls in Frameworks */ = {isa = PBXBuildFile; productRef = 8777B9592B3426F7007915B2 /* AppKitControls */; };
 		8782F4692B33E7E1008B1912 /* AppKitExtensions in Frameworks */ = {isa = PBXBuildFile; productRef = 8782F4682B33E7E1008B1912 /* AppKitExtensions */; };
 		8782F46F2B33F627008B1912 /* AppDefinitions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8782F46E2B33F627008B1912 /* AppDefinitions.swift */; };
 		8782F4732B33F8AC008B1912 /* LunarBarKit in Frameworks */ = {isa = PBXBuildFile; productRef = 8782F4722B33F8AC008B1912 /* LunarBarKit */; };
 		8782F4772B33F904008B1912 /* AppMainVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8782F4762B33F904008B1912 /* AppMainVC.swift */; };
 		8782F4832B342413008B1912 /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8782F4822B342413008B1912 /* HeaderView.swift */; };
+		878B73AB2DEFE8EC00F0E331 /* DateRefreshTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 878B73AA2DEFE8EB00F0E331 /* DateRefreshTimer.swift */; };
+		879B2B8D2DFC3D9A009850B0 /* AppHacks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 879B2B8C2DFC3D9A009850B0 /* AppHacks.swift */; };
 		87A28A5D2B344D50006655F2 /* DateGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87A28A5C2B344D50006655F2 /* DateGridView.swift */; };
 		87D65EB12B41200100E41049 /* AppPreferencesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87D65EB02B41200100E41049 /* AppPreferencesTests.swift */; };
 		87D65EB62B412A4700E41049 /* AppDefinitionsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87D65EB52B412A4700E41049 /* AppDefinitionsTests.swift */; };
@@ -76,11 +79,14 @@
 		874E993F2B33DC20002FC90A /* LunarBarTools */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = LunarBarTools; sourceTree = "<group>"; };
 		875A81262B39558000C031C3 /* AppVersion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppVersion.swift; sourceTree = "<group>"; };
 		875A81272B39558000C031C3 /* AppUpdater.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppUpdater.swift; sourceTree = "<group>"; };
+		877353D82DFBC1BA00F502AB /* AppDesign.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDesign.swift; sourceTree = "<group>"; };
 		8782F4652B33E740008B1912 /* Modules */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Modules; sourceTree = "<group>"; };
 		8782F46E2B33F627008B1912 /* AppDefinitions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDefinitions.swift; sourceTree = "<group>"; };
 		8782F4702B33F841008B1912 /* LunarBarKit */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = LunarBarKit; sourceTree = "<group>"; };
 		8782F4762B33F904008B1912 /* AppMainVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppMainVC.swift; sourceTree = "<group>"; };
 		8782F4822B342413008B1912 /* HeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
+		878B73AA2DEFE8EB00F0E331 /* DateRefreshTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateRefreshTimer.swift; sourceTree = "<group>"; };
+		879B2B8C2DFC3D9A009850B0 /* AppHacks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppHacks.swift; sourceTree = "<group>"; };
 		87A28A5C2B344D50006655F2 /* DateGridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateGridView.swift; sourceTree = "<group>"; };
 		87D65EB02B41200100E41049 /* AppPreferencesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppPreferencesTests.swift; sourceTree = "<group>"; };
 		87D65EB52B412A4700E41049 /* AppDefinitionsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDefinitionsTests.swift; sourceTree = "<group>"; };
@@ -115,6 +121,7 @@
 		871429242B3DC16A003FA2CB /* Shared */ = {
 			isa = PBXGroup;
 			children = (
+				877353D82DFBC1BA00F502AB /* AppDesign.swift */,
 				8782F46E2B33F627008B1912 /* AppDefinitions.swift */,
 				873AD8F52B4C3DAB001C90B1 /* AppIconFactory.swift */,
 				871429182B3DAF4A003FA2CB /* AppLocalizer.swift */,
@@ -140,6 +147,7 @@
 			children = (
 				8740E30E2B37FB36004A06C2 /* CalendarManager.swift */,
 				8740E2FE2B37C841004A06C2 /* HolidayManager.swift */,
+				878B73AA2DEFE8EB00F0E331 /* DateRefreshTimer.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -233,6 +241,7 @@
 			isa = PBXGroup;
 			children = (
 				874E992C2B33D8C0002FC90A /* AppDelegate.swift */,
+				879B2B8C2DFC3D9A009850B0 /* AppHacks.swift */,
 				8782F4762B33F904008B1912 /* AppMainVC.swift */,
 				8714291B2B3DBFDF003FA2CB /* AppMainVC+Menu.swift */,
 			);
@@ -305,7 +314,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1510;
-				LastUpgradeCheck = 1520;
+				LastUpgradeCheck = 1640;
 				TargetAttributes = {
 					8732DDEF2B3E896D004B72DE = {
 						CreatedOnToolsVersion = 15.1;
@@ -384,12 +393,15 @@
 				875A81292B39558000C031C3 /* AppUpdater.swift in Sources */,
 				875A81282B39558000C031C3 /* AppVersion.swift in Sources */,
 				8782F46F2B33F627008B1912 /* AppDefinitions.swift in Sources */,
+				879B2B8D2DFC3D9A009850B0 /* AppHacks.swift in Sources */,
+				877353D92DFBC1BA00F502AB /* AppDesign.swift in Sources */,
 				8740E31B2B39210F004A06C2 /* AppPreferences.swift in Sources */,
 				87FF2E822CE89F6700CBC2E0 /* DateDetailsView.swift in Sources */,
 				874D77772BCF94900093662D /* Unchecked.swift in Sources */,
 				87F81C542B43EBDE0071CA30 /* main.swift in Sources */,
 				87DA5AFF2B3433D400CE2C1A /* WeekdayView.swift in Sources */,
 				8740E2FF2B37C841004A06C2 /* HolidayManager.swift in Sources */,
+				878B73AB2DEFE8EC00F0E331 /* DateRefreshTimer.swift in Sources */,
 				873AD8F62B4C3DAB001C90B1 /* AppIconFactory.swift in Sources */,
 				8740E30F2B37FB36004A06C2 /* CalendarManager.swift in Sources */,
 				8714291C2B3DBFDF003FA2CB /* AppMainVC+Menu.swift in Sources */,

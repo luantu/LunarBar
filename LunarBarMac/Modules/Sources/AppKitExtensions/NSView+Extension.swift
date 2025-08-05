@@ -24,7 +24,7 @@ public extension NSView {
 
   /// Returns the image representation.
   var snapshotImage: NSImage? {
-    guard let bitmap = bitmapImageRepForCachingDisplay(in: bounds) else {
+    guard let bitmap = NSBitmapImageRep(size: bounds.size) ?? bitmapImageRepForCachingDisplay(in: bounds) else {
       return nil
     }
 
@@ -77,7 +77,7 @@ public extension NSView {
   func setAlphaValue(
     _ alphaValue: Double,
     duration: TimeInterval = 0.2,
-    completionHandler: (() -> Void)? = nil
+    completionHandler: (@Sendable () -> Void)? = nil
   ) {
     NSAnimationContext.runAnimationGroup { context in
       context.duration = duration

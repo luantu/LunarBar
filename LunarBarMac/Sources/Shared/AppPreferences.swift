@@ -16,7 +16,17 @@ enum AppPreferences {
     @Storage(key: "general.initial-launch", defaultValue: true)
     static var initialLaunch: Bool
 
-    @Storage(key: "general.menu-bar-icon", defaultValue: .date)
+    @Storage(key: "general.classic-interface", defaultValue: false)
+    static var classicInterface: Bool {
+      didSet {
+        let alert = NSAlert()
+        alert.messageText = Localized.UI.alertMessageRelaunchRequired
+        alert.addButton(withTitle: Localized.General.okay)
+        alert.runModal()
+      }
+    }
+
+    @Storage(key: "general.menu-bar-icon", defaultValue: .filledDate)
     static var menuBarIcon: MenuBarIcon {
       didSet {
         guard let delegate = NSApp.delegate as? AppDelegate else {
@@ -24,8 +34,15 @@ enum AppPreferences {
         }
 
         delegate.updateMenuBarIcon(needsLayout: true)
+        delegate.updateDateRefreshTimer()
       }
     }
+
+    @Storage(key: "general.system-symbol-name", defaultValue: nil)
+    static var systemSymbolName: String?
+
+    @Storage(key: "general.custom-date-format", defaultValue: nil)
+    static var customDateFormat: String?
 
     @Storage(key: "general.appearance", defaultValue: .system)
     static var appearance: Appearance
@@ -61,9 +78,12 @@ enum AppPreferences {
 
 // MARK: - Types
 
-enum MenuBarIcon: Codable {
-  case date
+enum MenuBarIcon: String, Codable {
+  case filledDate = "date" // For backward capability
+  case outlinedDate
   case calendar
+  case systemSymbol
+  case custom
 }
 
 enum Appearance: Codable {
