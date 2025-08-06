@@ -8,13 +8,6 @@
 
 <img src="./Screenshots/01.png" width="320" alt="截图 01"> <img src="./Screenshots/02.png" width="320" alt="截图 02">
 
-# 魔改内容
-1. 状态栏原日期图标，如图修改为显示 【日期+星期】
-
-   <img src="./Screenshots/04.png" width="320" alt="截图 04">
-
-2. 日期单击不再打开系统日历，仅作为日历使用
-
 > [!TIP]
 > 在 [libremac.github.io](https://libremac.github.io/) 探索我们的其他免费开源应用。
 
@@ -34,7 +27,7 @@ LunarBar 会自动检查更新，你也可以在应用内手动检查更新，�
 
 如果你是这类人，欢迎试试：
 
-- 日常使用 Mac  
+- 日常使用 Mac
 - 需要查看农历
 - 需要查看公共假日
 - 喜欢极致的应用

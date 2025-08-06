@@ -69,8 +69,8 @@ enum AppIconFactory {
 
 private class DateIconView: NSView {
   private enum Constants {
-    static let iconSize = CGSize(width: 88, height: 15)  // 增加宽度以适应更多文本
-    static let fontSize: Double = 13
+    static let iconSize = CGSize(width: 21, height: 15)
+    static let fontSize: Double = 12
     static let cornerRadius: Double = 2.5
     static let borderWidth: Double = 2.0
   }

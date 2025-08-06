@@ -15,10 +15,14 @@ public extension Calendar {
   static var solar: Calendar {
     let current = autoupdatingCurrent
     if current.identifier == .gregorian {
-      return current
+      var calendar = current
+      calendar.firstWeekday = 2  // Set Monday as the first day of the week
+      return calendar
     }
 
-    return Self(identifier: .gregorian)
+    var calendar = Self(identifier: .gregorian)
+    calendar.firstWeekday = 2  // Set Monday as the first day of the week
+    return calendar
   }
 
   /// Returns a lunar calendar, basically the Chinese calendar.

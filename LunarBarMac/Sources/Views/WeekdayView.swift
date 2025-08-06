@@ -24,12 +24,9 @@ final class WeekdayView: NSStackView {
     setAccessibilityRole(.group)
     setAccessibilityLabel(Localized.UI.accessibilityWeekdayArea)
 
-    var calendar = Calendar.solar
-    calendar.firstWeekday = 2 // 设置为周一(1=周日,2=周一)
-
-    let shortSymbols = calendar.orderedVeryShortWeekdaySymbols
-    let fullSymbols = calendar.orderedWeekdaySymbols
-    let weekendIndices = calendar.weekendIndices
+    let shortSymbols = Calendar.solar.orderedVeryShortWeekdaySymbols
+    let fullSymbols = Calendar.solar.orderedWeekdaySymbols
+    let weekendIndices = Calendar.solar.weekendIndices
 
     Logger.assert(shortSymbols.count == fullSymbols.count, "Invalid weekday symbols")
     Logger.assert(weekendIndices.count == 2, "Invalid weekend indices")

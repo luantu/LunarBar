@@ -14,11 +14,11 @@ import AppKit
 public class CustomButton: NSButton {
   public var hitTestInsets: CGPoint = .zero
   public var onMouseHover: ((_ isHovered: Bool) -> Void)?
-  public var onDoubleClick: (() -> Void)?  // 新增双击回调属性
+  public var onDoubleClick: (() -> Void)?
 
   private var trackingArea: NSTrackingArea?
-  private var clickCount = 0  // 点击计数器
-  private var clickTimer: Timer?  // 双击间隔计时器
+  private var lastClickTime: TimeInterval = 0
+  private let doubleClickThreshold: TimeInterval = 0.3
 
   override public var isHighlighted: Bool {
     didSet {
@@ -60,40 +60,22 @@ public class CustomButton: NSButton {
 
   override public func mouseDown(with event: NSEvent) {
     isHighlighted = true
+
+    let currentTime = event.timestamp
+    if currentTime - lastClickTime < doubleClickThreshold {
+      onDoubleClick?()
+    }
+    lastClickTime = currentTime
   }
 
   override public func mouseUp(with event: NSEvent) {
     isHighlighted = false
 
     if isMouseWithinBounds(event: event) {
-        clickCount += 1
-
-        if clickCount == 1 {
-            // 第一次点击，启动计时器
-            clickTimer = Timer.scheduledTimer(withTimeInterval: 0.3, repeats: false) { [weak self] _ in
-                DispatchQueue.main.async {
-                    if self?.clickCount == 1 {
-                        // 单机事件
-                        _ = self?.sendAction(self?.action, to: self?.target)
-                    }
-                    self?.clickCount = 0
-                }
-            }
-        } else if clickCount == 2 {
-            // 双击事件
-            clickTimer?.invalidate()
-            clickTimer = nil
-            clickCount = 0
-            onDoubleClick?()
-        }
+      _ = sendAction(action, to: target)
     } else {
-        onMouseHover?(false)
+      onMouseHover?(false)
     }
-}
-
-  // 新增双击事件设置方法
-  public func addDoubleClickAction(_ handler: @escaping () -> Void) {
-    onDoubleClick = handler
   }
 
   override public func mouseDragged(with event: NSEvent) {

@@ -90,10 +90,7 @@ extension DateGridView: NSCollectionViewDelegate {
 
 extension DateGridView {
   func updateCalendar(date monthDate: Date, lunarInfo: LunarInfo?) {
-    var calendar = Calendar.solar
-    calendar.firstWeekday = 2 // 设置为周一作为第一天
-
-    guard let allDates = calendar.allDatesFillingMonth(from: monthDate) else {
+    guard let allDates = Calendar.solar.allDatesFillingMonth(from: monthDate) else {
       return Logger.assertFail("Failed to generate the calendar")
     }
 
@@ -144,12 +141,9 @@ private extension DateGridView {
    Returns a 7 (column) * 6 (rows) grid layout for the collection.
    */
   func createLayout() -> NSCollectionViewLayout {
-    var calendar = Calendar.solar
-    calendar.firstWeekday = 2 // 设置为周一作为第一天
-
     let item = NSCollectionLayoutItem(
       layoutSize: NSCollectionLayoutSize(
-        widthDimension: .fractionalWidth(1 / Double(calendar.numberOfDaysInWeek)),
+        widthDimension: .fractionalWidth(1 / Double(Calendar.solar.numberOfDaysInWeek)),
         heightDimension: .fractionalHeight(1)
       )
     )

@@ -8,7 +8,7 @@ import AppKit
 
 public extension NSFont {
   static var menuBarMonospacedDigitFont: NSFont {
-    NSFont.monospacedDigitSystemFont(ofSize: 13, weight: .regular)
+    NSFont.monospacedDigitSystemFont(ofSize: 13, weight: .medium)
   }
 
   static func mediumSystemFont(ofSize fontSize: Double) -> NSFont {
