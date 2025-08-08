@@ -1,0 +1,7 @@
+module AppKitControls {
+  header "AppKitControls/CustomButton.swift"
+  header "AppKitControls/EditableTextField.swift"
+  header "AppKitControls/ImageButton.swift"
+  header "AppKitControls/TextLabel.swift"
+  export *
+}
