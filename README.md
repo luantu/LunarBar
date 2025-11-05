@@ -19,7 +19,7 @@
 
 LunarBar 会自动检查更新，你也可以在应用内手动检查更新，或者在 [releases](https://github.com/LunarBar-app/LunarBar/releases) 页面浏览历史版本。
 
-如果你偏好使用 [Homebrew](https://brew.sh/) 安装，在终端运行 `brew install lunarbar` 即可。
+如果你偏好使用 [Homebrew](https://brew.sh/) 安装，在终端运行 `brew install --cask lunarbar` 即可。
 
 > 无需担心非 App Store 安装的可靠性，LunarBar 是沙盒应用，且经过签名和 [notarization](https://developer.apple.com/documentation/security/notarizing_macos_software_before_distribution) 认证。
 >
