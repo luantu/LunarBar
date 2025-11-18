@@ -18,7 +18,7 @@ public class CustomButton: NSButton {
 
   private var trackingArea: NSTrackingArea?
   private var lastClickTime: TimeInterval = 0
-  private let doubleClickThreshold: TimeInterval = 0.3
+  private let doubleClickThreshold: TimeInterval = 0.2
 
   override public var isHighlighted: Bool {
     didSet {

@@ -6,6 +6,7 @@
 //
 
 import AppKit
+// sourcekit:ignore
 import AppKitControls
 import EventKit
 import LunarBarKit
