@@ -1,4 +1,7 @@
 disabled_rules:
+  - trailing_newline
+  - let_var_whitespace
+  - vertical_whitespace_closing_braces
 
   # Rationale: Arbitrary restriction
   - cyclomatic_complexity
