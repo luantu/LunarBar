@@ -26,6 +26,10 @@ extension AppMainVC {
 
     menu.addSeparator()
 
+    menu.addItem(menuItemOpenDateTime)
+
+    menu.addSeparator()
+
     menu.addItem(menuItemAboutLunarBar)
     menu.addItem(menuItemGitHub)
     menu.addItem(menuItemCheckForUpdates)
@@ -86,6 +90,11 @@ private extension AppMainVC {
     // Full-fledged picker that supports any year
     menu.addItem({ [weak self] in
       let picker = NSDatePicker()
+      if #available(macOS 26.0, *) {
+        picker.prefersCompactControlSizeMetrics = true
+      }
+
+      picker.locale = Locale(identifier: Localized.General.locale)
       picker.isBezeled = false
       picker.isBordered = false
       picker.datePickerStyle = .textFieldAndStepper
@@ -108,18 +117,7 @@ private extension AppMainVC {
 
       NSLayoutConstraint.activate([
         picker.centerXAnchor.constraint(equalTo: wrapper.centerXAnchor),
-        picker.centerYAnchor.constraint(equalTo: wrapper.centerYAnchor, constant: {
-          guard AppDesign.modernStyle else {
-            return 0
-          }
-
-        #if BUILD_WITH_SDK_26_OR_LATER
-          return 0
-        #else
-          // [macOS 26] Interim workaround for layout misalignment
-          return 2.5
-        #endif
-        }()),
+        picker.centerYAnchor.constraint(equalTo: wrapper.centerYAnchor),
       ])
 
       // Inside a submenu to avoid keyboard navigation conflicts
@@ -144,7 +142,7 @@ private extension AppMainVC {
   var menuItemAppearance: NSMenuItem {
     let menu = NSMenu()
 
-  #if BUILD_WITH_SDK_26_OR_LATER
+    // Option to use the "legacy" design
     if #available(macOS 26.0, *) {
       menu.addItem({
         let item = NSMenuItem(title: Localized.UI.menuTitleClassicInterface)
@@ -160,15 +158,13 @@ private extension AppMainVC {
 
       menu.addSeparator()
     }
-  #endif
 
     // Icon styles
     menu.addItem({
       let item = NSMenuItem(title: Localized.UI.menuTitleMenuBarIcon)
       item.isEnabled = false
 
-      // [macOS 26] Change this to 26.0
-      if #available(macOS 16.0, *) {
+      if #available(macOS 26.0, *) {
         // To improve the text alignment
         item.image = .with(symbolName: Icons.menubarRectangle, pointSize: Constants.menuIconSize)
       }
@@ -280,7 +276,7 @@ private extension AppMainVC {
     ].forEach { (title: String, scale: ContentScale) in
       menu.addItem(withTitle: title) { [weak self] in
         AppPreferences.General.contentScale = scale
-        self?.popover?.close()
+        self?.closePopover()
 
         if let delegate = NSApp.delegate as? AppDelegate {
           delegate.openPanel()
@@ -348,9 +344,10 @@ private extension AppMainVC {
       if let color = calendar.color {
         item.image = .with(
           cellColor: color,
-          borderColor: Colors.darkGray,
+          borderColor: color.darkerColor(),
+          borderWidth: view.hairlineWidth,
           size: CGSize(width: 12, height: 12),
-          cornerRadius: 2
+          cornerRadius: 3
         )
       }
 
@@ -384,7 +381,8 @@ private extension AppMainVC {
     }.isEnabled = AppPreferences.Calendar.hiddenCalendars != identifiers
 
     menu.addSeparator()
-    menu.addItem(withTitle: Localized.UI.menuTitlePrivacySettings) {
+    menu.addItem(withTitle: Localized.UI.menuTitlePrivacySettings) { [weak self] in
+      self?.closePopover()
       NSWorkspace.shared.safelyOpenURL(string: "x-apple.systempreferences:com.apple.preference.security")
     }
 
@@ -420,11 +418,13 @@ private extension AppMainVC {
 
     menu.addSeparator()
 
-    menu.addItem(withTitle: Localized.UI.menuTitleOpenDirectory) {
+    menu.addItem(withTitle: Localized.UI.menuTitleOpenDirectory) { [weak self] in
+      self?.closePopover()
       HolidayManager.default.openUserDefinedDirectory()
     }
 
-    menu.addItem(withTitle: Localized.UI.menuTitleCustomizationTips) {
+    menu.addItem(withTitle: Localized.UI.menuTitleCustomizationTips) { [weak self] in
+      self?.closePopover()
       NSWorkspace.shared.safelyOpenURL(string: "https://github.com/LunarBar-app/Holidays")
     }
 
@@ -455,9 +455,20 @@ private extension AppMainVC {
     return item
   }
 
+  var menuItemOpenDateTime: NSMenuItem {
+    let item = NSMenuItem(title: Localized.UI.menuTitleOpenDateTime)
+    item.addAction { [weak self] in
+      self?.closePopover()
+      NSWorkspace.shared.safelyOpenURL(string: "x-apple.systempreferences:com.apple.preference.datetime")
+    }
+
+    return item
+  }
+
   var menuItemAboutLunarBar: NSMenuItem {
     let item = NSMenuItem(title: Localized.UI.menuTitleAboutLunarBar)
-    item.addAction {
+    item.addAction { [weak self] in
+      self?.closePopover()
       NSApp.orderFrontStandardAboutPanel()
     }
 
@@ -466,7 +477,8 @@ private extension AppMainVC {
 
   var menuItemGitHub: NSMenuItem {
     let item = NSMenuItem(title: Localized.UI.menuTitleGitHub)
-    item.addAction {
+    item.addAction { [weak self] in
+      self?.closePopover()
       NSWorkspace.shared.safelyOpenURL(string: "https://github.com/LunarBar-app/LunarBar")
     }
 
@@ -475,8 +487,9 @@ private extension AppMainVC {
 
   var menuItemCheckForUpdates: NSMenuItem {
     let item = NSMenuItem(title: Localized.UI.menuTitleCheckForUpdates)
-    item.addAction {
+    item.addAction { [weak self] in
       Task {
+        self?.closePopover()
         await AppUpdater.checkForUpdates(explicitly: true)
       }
     }
@@ -570,5 +583,9 @@ private extension AppMainVC {
 
   func reloadCalendar() {
     updateCalendar(targetDate: monthDate)
+  }
+
+  func closePopover() {
+    popover?.close()
   }
 }

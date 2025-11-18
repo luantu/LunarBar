@@ -7,6 +7,14 @@
 import Foundation
 
 public extension DateFormatter {
+  static var mediumDate: Self {
+    let formatter = Self()
+    formatter.dateStyle = .medium
+    formatter.timeStyle = .none
+
+    return formatter
+  }
+
   static var fullDate: Self {
     let formatter = Self()
     formatter.dateStyle = .full
@@ -41,7 +49,8 @@ public extension DateFormatter {
 
 private extension Locale {
   static var chinese: Self {
-    if ["zh_TW", "zh_HK", "zh-Hant"].contains(autoupdatingCurrent.identifier) {
+    // Locale identifiers can contain (an irrelevant) region code, such as "zh-Hant_US"
+    if (["zh_TW", "zh_HK", "zh-Hant"].contains { autoupdatingCurrent.identifier.hasPrefix($0) }) {
       // Traditional Chinese
       return Locale(identifier: "zh-Hant")
     }

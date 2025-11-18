@@ -41,11 +41,17 @@ final class HolidayManager {
   var defaultsEnabled = AppPreferences.Calendar.defaultHolidays
 
   var userDefinedFiles: [String] {
-    guard let files = try? FileManager.default.contentsOfDirectory(atPath: userDefinedDirectory.path()) else {
+    guard let files = try? FileManager.default.contentsOfDirectory(at: userDefinedDirectory, includingPropertiesForKeys: nil) else {
       return []
     }
 
-    return files.filter { URL(filePath: $0).pathExtension.lowercased() == Constants.fileExtension }
+    return files.compactMap {
+      guard $0.pathExtension.lowercased() == Constants.fileExtension else {
+        return nil
+      }
+
+      return $0.lastPathComponent
+    }
   }
 
   func reloadCachedFiles() {
@@ -144,7 +150,7 @@ private extension HolidayManager {
   }
 
   func ensureDirectory(_ directory: URL) {
-    guard !FileManager.default.fileExists(atPath: directory.path()) else {
+    guard !FileManager.default.fileExists(atPath: directory.path(percentEncoded: false)) else {
       return
     }
 
@@ -156,16 +162,13 @@ private extension HolidayManager {
   }
 
   func contentsOf(directory: URL) -> [FileType]? {
-    guard let files = try? FileManager.default.contentsOfDirectory(atPath: directory.path()) else {
+    guard let files = try? FileManager.default.contentsOfDirectory(at: directory, includingPropertiesForKeys: nil) else {
       Logger.log(.error, "Failed to get contents from directory: \(directory)")
       return nil
     }
 
     return files.compactMap {
-      contentsOf(file: directory.appending(
-        path: $0,
-        directoryHint: .notDirectory
-      ))
+      contentsOf(file: $0)
     }
   }
 

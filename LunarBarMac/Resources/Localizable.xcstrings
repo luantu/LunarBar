@@ -112,6 +112,53 @@
         }
       }
     },
+    "%@ and %@ are %d day apart." : {
+      "comment" : "Template string used to show the distance between two dates",
+      "localizations" : {
+        "en" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%1$@ and %2$@ are %3$d day apart."
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%1$@ and %2$@ are %3$d days apart."
+                }
+              }
+            }
+          }
+        },
+        "zh-Hans" : {
+          "variations" : {
+            "plural" : {
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%1$@和%2$@相隔 %3$d 天。"
+                }
+              }
+            }
+          }
+        },
+        "zh-Hant" : {
+          "variations" : {
+            "plural" : {
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%1$@和%2$@相隔 %3$d 天。"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "About LunarBar" : {
       "comment" : "[Menu] Open the standard about panel",
       "localizations" : {
@@ -512,6 +559,23 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "大暑"
+          }
+        }
+      }
+    },
+    "Date & Time..." : {
+      "comment" : "[Menu] Open the system Date & Time settings pane",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "日期与时间…"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "日期與時間…"
           }
         }
       }
@@ -1362,6 +1426,23 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "端午"
+          }
+        }
+      }
+    },
+    "en_US_POSIX" : {
+      "comment" : "Stable locale identifier used to localize formatters or UI components",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "zh-Hans"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "zh-Hant"
           }
         }
       }
@@ -2255,23 +2336,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "等下再說"
-          }
-        }
-      }
-    },
-    "OK" : {
-      "comment" : "Title for the \"OK\" button",
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "好的"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "好的"
           }
         }
       }

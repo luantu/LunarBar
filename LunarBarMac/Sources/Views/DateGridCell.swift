@@ -301,7 +301,7 @@ private extension DateGridCell {
     containerView.addSubview(solarLabel)
     NSLayoutConstraint.activate([
       solarLabel.centerXAnchor.constraint(equalTo: containerView.centerXAnchor),
-      solarLabel.topAnchor.constraint(equalTo: containerView.topAnchor),
+      solarLabel.topAnchor.constraint(equalTo: containerView.topAnchor, constant: AppDesign.cellRectInset),
     ])
 
     lunarLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -323,17 +323,17 @@ private extension DateGridCell {
     containerView.addSubview(focusRingView)
     NSLayoutConstraint.activate([
       highlightView.topAnchor.constraint(equalTo: containerView.topAnchor),
-      highlightView.bottomAnchor.constraint(equalTo: eventView.bottomAnchor),
+      highlightView.bottomAnchor.constraint(equalTo: eventView.bottomAnchor, constant: AppDesign.cellRectInset),
       highlightView.centerXAnchor.constraint(equalTo: containerView.centerXAnchor),
 
       // Here we need to make sure the highlight view is wider than both labels
       highlightView.widthAnchor.constraint(
         greaterThanOrEqualTo: solarLabel.widthAnchor,
-        constant: Constants.focusRingBorderWidth
+        constant: Constants.focusRingBorderWidth + AppDesign.cellRectInset * 2
       ),
       highlightView.widthAnchor.constraint(
         greaterThanOrEqualTo: lunarLabel.widthAnchor,
-        constant: Constants.focusRingBorderWidth
+        constant: Constants.focusRingBorderWidth + AppDesign.cellRectInset * 2
       ),
 
       // The focus ring has the same frame as the highlight view
@@ -351,6 +351,10 @@ private extension DateGridCell {
       holidayView.widthAnchor.constraint(equalToConstant: holidayView.frame.width),
       holidayView.heightAnchor.constraint(equalToConstant: holidayView.frame.height),
     ])
+
+    let longPressRecognizer = NSPressGestureRecognizer(target: self, action: #selector(onLongPress(_:)))
+    longPressRecognizer.minimumPressDuration = 0.5
+    view.addGestureRecognizer(longPressRecognizer)
   }
 
   func revealDateInCalendar() {
@@ -358,10 +362,22 @@ private extension DateGridCell {
       return Logger.assertFail("Missing cellDate to continue")
     }
 
-    // Clear states and open the Calendar app
-    view.window?.orderOut(nil)
     dismissDetails()
-    CalendarManager.default.revealDateInCalendar(cellDate)
+    (NSApp.delegate as? AppDelegate)?.openCalendar(targetDate: cellDate)
+  }
+
+  @objc func onLongPress(_ recognizer: NSPressGestureRecognizer) {
+    guard recognizer.state == .began, let cellDate else {
+      return
+    }
+
+    NSHapticFeedbackManager.defaultPerformer.perform(
+      .generic,
+      performanceTime: .now
+    )
+
+    dismissDetails()
+    (NSApp.delegate as? AppDelegate)?.countDaysBetween(targetDate: cellDate)
   }
 
   func onMouseHover(_ isHovered: Bool) {
@@ -376,7 +392,8 @@ private extension DateGridCell {
       try await Task.sleep(for: .seconds(0.5))
       let popover = DateDetailsView.createPopover(
         title: self.mainInfo,
-        events: self.cellEvents
+        events: self.cellEvents,
+        lineWidth: self.view.hairlineWidth
       )
 
       popover.show(
@@ -384,6 +401,10 @@ private extension DateGridCell {
         of: self.containerView,
         preferredEdge: .maxY
       )
+
+      if !AppPreferences.Accessibility.reduceMotion {
+        popover.window?.fadeIn()
+      }
 
       self.detailsPopover = popover
     }
@@ -396,10 +417,21 @@ private extension DateGridCell {
   @discardableResult
   func dismissDetails() -> Bool {
     let wasOpen = detailsPopover?.isShown == true
-    detailsPopover?.close()
-    detailsPopover = nil
-
     detailsTask?.cancel()
+
+    let closeDetails: @Sendable () -> Void = {
+      Task { @MainActor in
+        self.detailsPopover?.close()
+        self.detailsPopover = nil
+      }
+    }
+
+    if !AppPreferences.Accessibility.reduceMotion, let window = detailsPopover?.window {
+      window.fadeOut(completion: closeDetails)
+    } else {
+      closeDetails()
+    }
+
     return wasOpen
   }
 }

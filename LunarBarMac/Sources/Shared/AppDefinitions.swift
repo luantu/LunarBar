@@ -16,7 +16,7 @@ import LunarBarKit
  */
 enum Localized {
   enum General {
-    static let okay = String(localized: "OK", comment: "Title for the \"OK\" button")
+    static let locale = String(localized: "en_US_POSIX", comment: "Stable locale identifier used to localize formatters or UI components")
     static let cancel = String(localized: "Cancel", comment: "Title for the \"Cancel\" button")
     static let learnMore = String(localized: "Learn More", comment: "Title for the \"Learn More\" button")
   }
@@ -63,6 +63,7 @@ enum Localized {
     static let menuTitleCustomizationTips = String(localized: "Customization Tips", comment: "[Menu] View tips of customizing public holidays")
     static let menuTitleReloadCustomizations = String(localized: "Reload Customizations", comment: "[Menu] Reload customized public holidays")
     static let menuTitleLaunchAtLogin = String(localized: "Launch at Login", comment: "[Menu] Automatically start the app at login")
+    static let menuTitleOpenDateTime = String(localized: "Date & Time...", comment: "[Menu] Open the system Date & Time settings pane")
     static let menuTitleAboutLunarBar = String(localized: "About LunarBar", comment: "[Menu] Open the standard about panel")
     static let menuTitleGitHub = String(localized: "GitHub", comment: "[Menu] Open the LunarBar repository on GitHub")
     static let menuTitleCheckForUpdates = String(localized: "Check for Updates...", comment: "[Menu] Check for new versions")
@@ -92,6 +93,7 @@ enum Localized {
     static let workdayLabel = String(localized: "Workday", comment: "Label for workdays")
     static let holidayLabel = String(localized: "Holiday", comment: "Label for holidays")
     static let allDayLabel = String(localized: "all-day", comment: "Label for an all-day event")
+    static let daysBetweenTemplate = String(localized: "%@ and %@ are %d day apart.", comment: "Template string used to show the distance between two dates")
 
     /// https://en.wikipedia.org/wiki/Solar_term
     static let solarTerms = [
@@ -192,25 +194,18 @@ enum Localized {
 enum Icons {
   static let bookmarkFill = "bookmark.fill"
   static let calendar = "calendar"
-  static let chevronBackward = "chevron.backward"
-  static let chevronForward = "chevron.forward"
+  static let chevronCompactBackward = "chevron.compact.backward"
+  static let chevronCompactForward = "chevron.compact.forward"
   static let circle = "circle"
   static let exclamationmarkTriangle = "exclamationmark.triangle"
   static let gear = "gear"
   static let menubarRectangle = "menubar.rectangle"
   static let mustacheFill = "mustache.fill"
-  static let wandAndSparkles = {
-    if #available(macOS 15.0, *) {
-      return "wand.and.sparkles"
-    }
-
-    return "wand.and.stars"
-  }()
+  static let wandAndSparkles = "wand.and.sparkles"
 }
 
 enum Colors {
   static let controlAccent: NSColor = .controlAccentColor
-  static let darkGray: NSColor = .darkGray
   static let primaryLabel: NSColor = .labelColor
   static let systemTeal: NSColor = .systemTeal
   static let systemOrange: NSColor = .systemOrange

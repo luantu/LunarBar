@@ -17,16 +17,15 @@ enum AppDesign {
       return false
     }
 
-  #if BUILD_WITH_SDK_26_OR_LATER
     return !AppPreferences.General.classicInterface
-  #else
-    // defaults write app.cyan.lunarbar com.apple.SwiftUI.IgnoreSolariumLinkedOnCheck -bool true
-    return UserDefaults.standard.bool(forKey: "com.apple.SwiftUI.IgnoreSolariumLinkedOnCheck")
-  #endif
   }
 
   static var contentMargin: Double {
-    modernStyle ? (4 * AppPreferences.General.contentScale.rawValue) : 0
+    (modernStyle ? 4 : 2) * AppPreferences.General.contentScale.rawValue
+  }
+
+  static var cellRectInset: Double {
+    (modernStyle ? 1 : 0) * AppPreferences.General.contentScale.rawValue
   }
 
   static var cellCornerRadius: Double {
@@ -38,10 +37,7 @@ enum AppDesign {
   }
 
   private static var isMacOSTahoe: Bool {
-    // [macOS 26] Change this to 26.0
-    //
-    // macOS Tahoe version number is 16.0 if the SDK is old
-    guard #available(macOS 16.0, *) else {
+    guard #available(macOS 26.0, *) else {
       return false
     }
 
@@ -55,21 +51,13 @@ extension NSViewController {
   func applyMaterial(_ material: NSVisualEffectView.Material) {
     self.material = material
 
-    // [macOS 26] Change this to 26.0
-    guard #available(macOS 16.0, *), AppDesign.modernStyle else {
+    guard #available(macOS 26.0, *), AppDesign.modernStyle else {
       return
     }
 
     let tintColor: NSColor = material == .windowBackground ? .windowBackgroundColor : .clear
-    visualEffectView?.enumerateDescendants { (effectView: NSView) in
-    #if BUILD_WITH_SDK_26_OR_LATER
-      (effectView as? NSGlassEffectView)?.tintColor = tintColor
-    #else
-      let setter = sel_getUid("setTintColor:")
-      if effectView.responds(to: setter) {
-        effectView.perform(setter, with: tintColor)
-      }
-    #endif
+    visualEffectView?.enumerateDescendants { (glassView: NSGlassEffectView) in
+      glassView.tintColor = tintColor
     }
   }
 }

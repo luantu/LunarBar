@@ -6,6 +6,7 @@
 //
 
 import AppKit
+import AppKitExtensions
 import SwiftUI
 import EventKit
 import LunarBarKit
@@ -16,6 +17,7 @@ import LunarBarKit
 struct DateDetailsView: View {
   private let title: String
   private let events: [EKCalendarItem]
+  private let lineWidth: Double
 
   var body: some View {
     let scale = AppPreferences.General.contentScale.rawValue
@@ -31,9 +33,12 @@ struct DateDetailsView: View {
 
       ForEach(0..<min(events.count, Constants.maximumRows), id: \.self) { index in
         let event = events[index]
+        let color = event.calendar.color ?? Colors.controlAccent
+
         HStack {
           Circle()
-            .fill(Color(event.calendar.color))
+            .fill(Color(color))
+            .strokeBorder(Color(color.darkerColor()), lineWidth: lineWidth)
             .frame(width: Constants.dotSize * scale, height: Constants.dotSize * scale)
           Text(event.title)
             .font(font(weight: .regular, scale: scale))
@@ -60,6 +65,7 @@ struct DateDetailsView: View {
           .padding(.vertical, 2) // Tiny element, no need to scale
       }
     }
+    .frame(minWidth: events.isEmpty ? 0 : 200)
     .padding(AppDesign.contentMargin)
   }
 
@@ -68,13 +74,15 @@ struct DateDetailsView: View {
     .system(size: max(Constants.fontSize * scale, 11.0), weight: weight)
   }
 
-  static func createPopover(title: String, events: [EKCalendarItem]) -> NSPopover {
+  static func createPopover(title: String, events: [EKCalendarItem], lineWidth: Double) -> NSPopover {
     let popover = NSPopover()
     popover.behavior = .applicationDefined
     popover.animates = false
+    popover.anchorHidden = true
     popover.contentViewController = DateDetailsHostVC(rootView: Self(
       title: title,
-      events: events
+      events: events,
+      lineWidth: lineWidth
     ))
 
     return popover
@@ -154,7 +162,7 @@ private extension EKCalendarItem {
 }
 
 private enum Constants {
-  static let fontSize: Double = 12
+  @MainActor static let fontSize: Double = AppDesign.modernStyle ? 12.5 : 12.0
   static let dotSize: Double = 6
   static let rowHeight: Double = 28
   static let smallPadding: Double = 8

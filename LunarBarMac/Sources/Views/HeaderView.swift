@@ -34,7 +34,7 @@ final class HeaderView: NSView {
 
   private lazy var nextButton: ImageButton = {
     let button = createButton(
-      symbolName: Icons.chevronForward,
+      symbolName: Icons.chevronCompactForward,
       accessibilityLabel: Localized.UI.buttonTitleNextMonth
     )
 
@@ -69,7 +69,7 @@ final class HeaderView: NSView {
 
   private lazy var previousButton: ImageButton = {
     let button = createButton(
-      symbolName: Icons.chevronBackward,
+      symbolName: Icons.chevronCompactBackward,
       accessibilityLabel: Localized.UI.buttonTitlePreviousMonth
     )
 
@@ -201,6 +201,7 @@ private extension HeaderView {
   func createButton(symbolName: String, accessibilityLabel: String) -> ImageButton {
     ImageButton(
       symbolName: symbolName,
+      sizeDelta: AppDesign.modernStyle ? 1 : 0,
       cornerRadius: AppDesign.cellCornerRadius,
       highlightColorProvider: { .highlightedBackground },
       tintColor: Colors.primaryLabel,
